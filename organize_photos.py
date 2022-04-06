@@ -1,4 +1,5 @@
 import os
+import sys
 
 
 def extract_place(name: str):
@@ -12,7 +13,13 @@ def make_place_directories(places: list):
 
 
 def organize_photos(directory: str):
-    originals = os.listdir(directory)
+    try:
+        os.chdir(directory)
+    except FileNotFoundError:
+        print("\033[91mPlease ensure you have extracted "
+              "the Photos folder in this directory")
+        sys.exit()
+    originals = os.listdir()
     places = []
     for photo in originals:
         place_name = extract_place(photo)
